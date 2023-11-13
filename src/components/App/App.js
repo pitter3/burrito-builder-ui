@@ -37,9 +37,10 @@ function App() {
 
   useEffect(() => {
     getOrders()
-    .then((response) => setOrders(response.orders))
-    .catch((err) => console.error("Error fetching:", err));
-  });
+      .then((response) => setOrders(response.orders))
+      .catch((err) => console.error("Error fetching:", err));
+  }, []); 
+  
 
   return (
     <main className="App">
