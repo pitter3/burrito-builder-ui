@@ -1,17 +1,46 @@
-import { useState } from "react";
+// OrderForm.js
 
-function OrderForm(props) {
+import React, { useState } from "react";
+
+function OrderForm({ addOrder }) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
+  const [noIngredientsError, setNoIngredientsError] = useState(false);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    clearInputs();
-  }
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-  function clearInputs() {
+  const handleIngredientClick = (ingredient) => {
+    setIngredients((prevIngredients) => [...prevIngredients, ingredient]);
+    setNoIngredientsError(false); // Clear the error when an ingredient is added
+  };
+
+  const clearInputs = () => {
     setName("");
     setIngredients([]);
+    setNoIngredientsError(false); // Clear the error when the form is submitted
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (ingredients.length <= 0) {
+      setNoIngredientsError(true);
+      return;
+    }
+
+    const newOrder = {
+      id: Date.now(),
+      name,
+      ingredients,
+    };
+
+    // Call the addOrder prop to submit the order
+    addOrder(newOrder);
+
+    // Clear form inputs
+    clearInputs();
   };
 
   const possibleIngredients = [
@@ -28,34 +57,43 @@ function OrderForm(props) {
     "cilantro",
     "sour cream",
   ];
-  const ingredientButtons = possibleIngredients.map((ingredient) => {
-    return (
-      <button
-        key={ingredient}
-        name={ingredient}
-        // onClick={(e) => }
-      >
-        {ingredient}
-      </button>
-    );
-  });
+
+  const ingredientButtons = possibleIngredients.map((ingredient) => (
+    <button
+      key={ingredient}
+      onClick={(e) => {
+        e.preventDefault();
+        handleIngredientClick(ingredient);
+      }}
+      className={ingredients.includes(ingredient) ? "selected" : ""}
+    >
+      {ingredient}
+    </button>
+  ));
 
   return (
-    <form>
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={name}
-        // onChange={(e) => }
-      />
+    <div className="Form">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={name}
+          onChange={handleNameChange}
+          required
+        />
 
-      {ingredientButtons}
+        {ingredientButtons}
 
-      <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
+        {noIngredientsError && (
+          <p className="error">Please select at least 1 ingredient</p>
+        )}
 
-      <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
-    </form>
+        <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
+
+        <button type="submit">Submit Order</button>
+      </form>
+    </div>
   );
 }
 
