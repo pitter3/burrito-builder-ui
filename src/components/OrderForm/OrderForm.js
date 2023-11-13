@@ -1,5 +1,3 @@
-// OrderForm.js
-
 import React, { useState } from "react";
 
 function OrderForm({ addOrder }) {
@@ -13,13 +11,13 @@ function OrderForm({ addOrder }) {
 
   const handleIngredientClick = (ingredient) => {
     setIngredients((prevIngredients) => [...prevIngredients, ingredient]);
-    setNoIngredientsError(false); // Clear the error when an ingredient is added
+    setNoIngredientsError(false);
   };
 
   const clearInputs = () => {
     setName("");
     setIngredients([]);
-    setNoIngredientsError(false); // Clear the error when the form is submitted
+    setNoIngredientsError(false);
   };
 
   const handleSubmit = (e) => {
@@ -29,17 +27,12 @@ function OrderForm({ addOrder }) {
       setNoIngredientsError(true);
       return;
     }
-
     const newOrder = {
       id: Date.now(),
       name,
       ingredients,
     };
-
-    // Call the addOrder prop to submit the order
     addOrder(newOrder);
-
-    // Clear form inputs
     clearInputs();
   };
 
