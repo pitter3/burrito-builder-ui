@@ -4,13 +4,10 @@ import { getOrders } from "../../apiCalls";
 import Orders from "../../components/Orders/Orders";
 import OrderForm from "../../components/OrderForm/OrderForm";
 
-
-
-
 function App() {
   const [orders, setOrders] = useState([]);
 
-  const addOrder = (newOrder, setOrders) => {
+  const addOrder = (newOrder) => {
     return fetch("http://localhost:3001/api/v1/orders", {
       method: "POST",
       headers: {
@@ -40,7 +37,6 @@ function App() {
       .then((response) => setOrders(response.orders))
       .catch((err) => console.error("Error fetching:", err));
   }, []); 
-  
 
   return (
     <main className="App">
