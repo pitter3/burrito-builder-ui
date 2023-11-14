@@ -20,6 +20,7 @@ describe('Submit Form with Bob and Beans', () => {
     cy.wait('@getOrders');
     cy.get('.order').should('have.length', 3); 
     cy.get('.Form input[name="name"]').type('Bob');
+    cy.get('.Form input[name="name"]').should('have.value', 'Bob');
     cy.get('.Form button:contains("beans")').click();
     cy.get('.Form button[type="submit"]').click();
     cy.wait('@postOrder');
