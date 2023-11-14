@@ -79,6 +79,7 @@ describe('Form Validation', () => {
     cy.get('.Form p').contains('Order: beans, hot sauce').should('exist');
     cy.get('.Form button[type="submit"]').click();
     cy.wait('@postOrder');
+    cy.get('.error').should('not.exist')
     cy.get('.order').should('have.length', 4);
     cy.get('.order').first().find('h3').should('contain', 'Pat');
     cy.get('.order').first().find('ul.ingredient-list li').first().should('contain', 'beans');
