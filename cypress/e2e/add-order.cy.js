@@ -18,7 +18,7 @@ describe('Submit Form with Bob and Beans', () => {
   it('should submit form with Bob and Beans', () => {
     cy.visit('localhost:3000');
     cy.wait('@getOrders');
-    cy.get('.order').should('have.length', 3); 
+    cy.get('.order').should('have.length', 3);
     cy.get('.Form input[name="name"]').type('Bob');
     cy.get('.Form input[name="name"]').should('have.value', 'Bob');
     cy.get('.Form button:contains("beans")').click();

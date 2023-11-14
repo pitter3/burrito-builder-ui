@@ -16,9 +16,11 @@ describe('Form Validation', () => {
     // Name typed, but no ingredient(s) selected
     cy.visit('localhost:3000');
     cy.wait('@getOrders');
+    cy.get('.order').should('have.length', 3);
     cy.get('.Form button[type="submit"]').type("Arnold");
+    cy.get('.Form input[name="name"]').should('have.value', 'Arnold');
     cy.get('.Form button[type="submit"]').click();
-    cy.get('.error').should('exist');
+    cy.get('.error').should('exist').contains('Please select at least 1 ingredient');
     cy.get('.order').should('have.length', 3);
 
     // Neither nor
