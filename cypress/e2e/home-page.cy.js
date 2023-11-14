@@ -10,6 +10,7 @@ describe('Home Page', () => {
     cy.get('h1').should('contain', 'Burrito Builder')
     cy.get('.Form form').should('exist');
     cy.get('.Form input[name="name"]').should('exist');
+    cy.get('.Form input[name="name"]').should('have.attr', 'placeholder', 'Name');
     cy.get('.Form button').should('have.length', 13);
     cy.get('.Form p').contains('Order: Nothing selected').should('exist');
     cy.get('.Form button[type="submit"]').should('exist');
